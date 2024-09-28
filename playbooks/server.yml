@@ -1,0 +1,9 @@
+- name: Configure Server
+  hosts: server
+  tasks:
+    - name: hosts
+      include_tasks:
+        file: "tasks/hosts.yml"
+    - name: Install various
+      include_tasks:
+        file: "tasks/commons.yml"
