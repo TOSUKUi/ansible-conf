@@ -1,0 +1,39 @@
+- name: "Install nvidia-docker"
+  hosts: nvidia-gpu
+  become: true
+  tasks:
+    - name: Check if nvidia-container is installed
+      ansible.builtin.command: dpkg -l nvidia-container-toolkit
+      register: nvidia_check
+      changed_when: false
+      ignore_errors: true
+
+    - name: block of install nvidia-cotainer-toolkit
+      block:
+        - name: Download nvidia gpg key
+          ansible.builtin.get_url:
+            url: https://nvidia.github.io/libnvidia-container/gpgkey
+            dest: /usr/share/keyrings/nvidia-container-toolkit-keyring.asc
+            mode: "0644"
+
+        - name: add nvidia toolkit repository
+          ansible.builtin.apt_repository:
+            repo: "deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.asc] https://nvidia.github.io/libnvidia-container/stable/deb/$(ARCH) /"
+            filename: nvidia-container-toolkit
+            state: present
+            update_cache: yes
+
+        - name: install nvidia-docker
+          ansible.builtin.apt:
+            pkg:
+              - nvidia-container-toolkit
+
+        - name: configure nvidia-docker
+          shell: |
+            nvidia-ctk runtime configure --runtime=docker
+
+        - name: restart docker
+          ansible.builtin.systemd:
+            name: docker
+            state: restarted
+      when: nvidia_check.rc != 0
