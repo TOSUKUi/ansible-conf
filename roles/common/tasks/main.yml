@@ -1,0 +1,31 @@
+---
+- name: Install common packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ common_packages }}"
+    state: present
+    update_cache: true
+
+- name: Configure /etc/hosts
+  become: true
+  ansible.builtin.template:
+    src: hosts.j2
+    dest: /etc/hosts
+    mode: "0644"
+    owner: root
+    group: root
+    backup: "{{ hosts_backup | default(true) }}"
+  notify: restart networking
+  tags:
+    - common
+    - hosts
+
+- name: Update system packages
+  become: true
+  ansible.builtin.package:
+    name: "*"
+    state: latest
+  when: common_update_packages | default(false)
+  tags:
+    - common
+    - update

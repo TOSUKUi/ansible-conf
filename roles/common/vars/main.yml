@@ -1,0 +1,10 @@
+---
+# Common role variables
+common_packages:
+  - curl
+  - wget
+  - git
+  - htop
+  - vim
+  - unzip
+  - tree

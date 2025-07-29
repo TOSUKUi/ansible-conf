@@ -1,0 +1,12 @@
+---
+# Default variables for common role
+common_packages:
+  - curl
+  - wget
+  - git
+  - htop
+  - vim
+  - unzip
+  - tree
+
+hosts_backup: true

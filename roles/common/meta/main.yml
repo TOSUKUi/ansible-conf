@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: ansible-conf
+  description: Common system setup tasks
+  company: 
+  license: MIT
+  min_ansible_version: '2.9'
+  platforms:
+    - name: Ubuntu
+      versions:
+        - '20.04'
+        - '22.04'
+  galaxy_tags:
+    - system
+    - common
+
+dependencies: []

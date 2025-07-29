@@ -1,0 +1,7 @@
+---
+- name: Install the Common packages
+  hosts: all
+  roles:
+    - common
+    - vim
+    - docker
