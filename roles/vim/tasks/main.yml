@@ -1,0 +1,15 @@
+---
+- name: Install and setup vim
+  become: true
+  block:
+    - name: Install vim from apt
+      package:
+        name:
+          - vim
+    - name: Install vimrc
+      template:
+        src: vimrc.j2
+        dest: /etc/vim/vimrc
+        mode: "0644"
+        owner: root
+        group: root
