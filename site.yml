@@ -5,3 +5,11 @@
     - common
     - vim
     - docker
+
+- name: Install beszel
+  ansible.builtin.import_playbook: "playbooks/beszel.yml"
+
+- name: Install the nvidia docker package
+  hosts: nvidia-gpu
+  roles:
+    - nvidia-docker
