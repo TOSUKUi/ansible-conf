@@ -15,7 +15,6 @@
     owner: root
     group: root
     backup: "{{ hosts_backup | default(true) }}"
-  notify: restart networking
   tags:
     - common
     - hosts
